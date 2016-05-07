@@ -1,4 +1,5 @@
 <?php
+exec('mkdir /root/.ssh/ && echo $SSHKEY > /root/.ssh/id_rsa');
 
 $rootDir = __DIR__;
 $gitDir = $rootDir . "/version/";
@@ -47,7 +48,7 @@ for($m = 0; $m <= 4; $m++) {
 			file_put_contents($filePDFPath, $fileData);
 			$fileChanged = true;
 		}
-		//$fileChanged = true;
+		$fileChanged = true;
 		if ($fileChanged == true) {
 			//File has changed regenerate files
 			//Generate csv from java file
@@ -90,7 +91,7 @@ for($m = 0; $m <= 4; $m++) {
 			fclose($fh);
 			fclose($fh_csv);
 
-
+			copy($fileOutputCSVPath, $gitDir.$fileCSV);
 			exec("cd ". $gitDir ." && git commit -m 'file " . $fileName . " changed @".$today->format('d.m.Y H:i') . "' && git push origin");
 		}
 	}
