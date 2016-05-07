@@ -3,9 +3,12 @@ exec('mkdir /root/.ssh/ && echo $SSHKEY > /root/.ssh/id_rsa');
 
 $rootDir = __DIR__;
 $gitDir = $rootDir . "/version/";
-if (!file_exists($gitDir)) {
-	mkdir($gitDir, 0777, true);
-}
+
+exec('git clone git@github.com:muc-fluechtlingsrat/bamf-asylgeschaeftsstatistik.git version');
+
+//if (!file_exists($gitDir)) {
+//	mkdir($gitDir, 0777, true);
+//}
 
 $tabulaJar = "tabula.jar";
 $tabulaUrl = "https://github.com/tabulapdf/tabula-java/releases/download/tabula-0.9.0/tabula-0.9.0-SNAPSHOT-jar-with-dependencies.jar";
