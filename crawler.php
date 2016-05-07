@@ -1,5 +1,5 @@
 <?php
-exec('mkdir /root/.ssh/ && echo $SSHKEY > /root/.ssh/id_rsa');
+exec('mkdir /root/.ssh/ && echo $SSHKEY > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa');
 exec('ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts');
 $rootDir = __DIR__;
 $gitDir = $rootDir . "/version/";
