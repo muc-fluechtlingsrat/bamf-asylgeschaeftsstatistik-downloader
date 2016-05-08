@@ -13,6 +13,10 @@ $gitDir = $rootDir . "/version/";
 exec('git config --global user.email $GIT_USER_EMAIL');
 exec('git config --global user.name $GIT_USER_NAME');
 exec('git clone $GIT_VERSION_REPOSITORY version');
+//git@github.com:muc-fluechtlingsrat/bamf-asylgeschaeftsstatistik.git
+//if (!file_exists($gitDir)) {
+//	mkdir($gitDir, 0777, true);
+//}
 
 $tabulaJar = "tabula.jar";
 $tabulaUrl = "https://github.com/tabulapdf/tabula-java/releases/download/tabula-0.9.0/tabula-0.9.0-SNAPSHOT-jar-with-dependencies.jar";
@@ -99,7 +103,7 @@ for($m = 0; $m <= 4; $m++) {
 			fclose($fh_csv);
 
 			copy($fileOutputCSVPath, $gitDir.$fileCSV);
-			exec("cd ". $gitDir ." && git commit -m 'file " . $fileName . " changed @".$today->format('d.m.Y H:i') . "' && git push origin");
+			exec("cd ". $gitDir ." && git add " . $fileCSV . " && git commit -m 'file " . $fileName . " changed @".$today->format('d.m.Y H:i') . "' && git push origin");
 		}
 	}
 
