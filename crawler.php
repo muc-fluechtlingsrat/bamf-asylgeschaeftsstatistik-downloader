@@ -1,5 +1,11 @@
 <?php
 exec('mkdir /root/.ssh/ && echo $SSHKEY > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa');
+
+//Replace all __BR__ with breaks because docker cloud does not accept breaks in environment variables
+$sshKey = file_get_contents('/root/.ssh/id_rsa');
+$sshKey = str_replace("__BR__", "\n", $sshKey);
+file_put_contents('/root/.ssh/id_rsa', $sshKey);
+
 exec('ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts');
 $rootDir = __DIR__;
 $gitDir = $rootDir . "/version/";
