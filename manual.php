@@ -52,7 +52,7 @@ for($m = 0; $m <= 4; $m++) {
 			while($line = fgetcsv($fh)) {
 				$lineParts = explode(" ", $line[0]);
 
-				if (is_numeric($lineParts[0]) && number_format($lineParts[0], 0, 0, "") < 30) {
+				if (is_numeric($lineParts[0]) && number_format($lineParts[0], 0, 0, "") < 30 || $lineParts[0] === "Summe" || strpos($lineParts[0], "Herkunft") === 0) {
 					$newLine = array();
 					$colCount = 0;
 					$prevPart = null;
@@ -60,7 +60,13 @@ for($m = 0; $m <= 4; $m++) {
 					for($l = 0; $l < count($lineParts); $l++) {
 
 						if ($prevPart != null) {
-							if (preg_match('/^[0-9\-\.%]*$/', $prevPart) == false) {
+              if ($prevPart === "Top" && $lineParts[$l] === "10") {
+                $lineParts[$l] = "Ten";
+              }
+              if (preg_match('/^[0-9]{1,3}.[0-9]{3}/', $lineParts[$l]) === 1) {
+                $lineParts[$l] = str_replace(".", "", $lineParts[$l]);
+              }
+              if (preg_match('/^[0-9\-\.%]*$/', $prevPart) == false) {
 								if (preg_match('/^[0-9\-\.%]*$/', $lineParts[$l]) == false) {
 									$newLine[$colCount] = $newLine[$colCount]." ".$lineParts[$l];
 									$prevPart = $lineParts[$l];
@@ -85,7 +91,6 @@ for($m = 0; $m <= 4; $m++) {
 			fclose($fh);
 			fclose($fh_csv);
 
-			copy($fileOutputCSVPath, $gitDir.$fileCSV);
 		}
 	}
 
