@@ -12,6 +12,12 @@ for($m = 0; $m <= 4; $m++) {
     if (file_exists($fileInputCSVPath)) {
       $fh_inp = fopen($fileInputCSVPath, 'r');
       $fh_out = fopen($fileOutputCSVPath, 'w+');
+      $extracted = fopen("archiv/header_cleaned.csv", "r");
+      while (($line = fgetcsv($extracted)) !== FALSE) {
+        //$line is an array of the csv elements
+        fputcsv($fh_out, $line);
+      } 
+      fclose($extracted);
       // calculate cleaned_total, and cleaned_quota 
       while($line = fgetcsv($fh_inp)) {
           $a = (($line[6]+$line[8]+$line[9])/($line[6]+$line[8]+$line[9]+$line[11]))*100;

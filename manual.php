@@ -19,7 +19,7 @@ $today = new \DateTime();
 $url = "http://www.bamf.de/SharedDocs/Anlagen/DE/Downloads/Infothek/Statistik/Asyl/__YEAR____MONTH__-statistik-anlage-asyl-geschaeftsbericht.pdf?__blob=publicationFile";
 
 $date = new \DateTime();
-for($m = 0; $m <= 4; $m++) {
+for($m = 0; $m <= 5; $m++) {
     $new_url = $url;
     $new_url = str_replace(array("__YEAR__", "__MONTH__"), array($date->format('Y'), $date->format('m')), $url);
 
@@ -32,6 +32,13 @@ for($m = 0; $m <= 4; $m++) {
         $fileCSVPath = $cacheDir.$fileCSV;
         $fileOutputCSVPath = $cacheDir.$fileOutputCSV;
 
+        $fh_csv = fopen($fileOutputCSVPath, 'w+');
+        $extracted = fopen("archiv/header_extracted.csv", "r");
+        while (($line = fgetcsv($extracted)) !== FALSE) {
+          //$line is an array of the csv elements
+          fputcsv($fh_csv, $line);
+        } 
+        fclose($extracted);
         $fileChanged = false;
         if (file_exists($filePDFPath)) {
             if (md5($fileData) != md5_file($filePDFPath)) {
@@ -48,7 +55,6 @@ for($m = 0; $m <= 4; $m++) {
             //Generate csv from java file
             exec("java -jar ./".$tabulaJar." -f CSV -o ".$fileCSVPath." -p 2 -n ".$filePDFPath);
             $fh = fopen($fileCSVPath, 'r');
-            $fh_csv = fopen($fileOutputCSVPath, 'w+');
             while($line = fgetcsv($fh)) {
 		// sanitize, some line end with blank then quotes
                 $lineParts = explode(" ", $line[0]);
@@ -101,8 +107,5 @@ for($m = 0; $m <= 4; $m++) {
 
     $date->sub(new \DateInterval('P1M'));
 }
-
-
-
-
-
+echo count($lineParts) ;
+?>
