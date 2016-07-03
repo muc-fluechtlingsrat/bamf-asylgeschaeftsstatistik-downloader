@@ -15,7 +15,6 @@ while($line = fgetcsv($fh_inp)) {
     $a = (($line[6]+$line[8]+$line[9])/($line[6]+$line[8]+$line[9]+$line[11]))*100;
     $a = number_format($a, 1,"," ,".");
     array_push($line, $line[6]+$line[8]+$line[9], $line[6]+$line[8]+$line[9]+$line[11], $a);
-    print_r($line);
     fputcsv($fh_out, $line);
   }
 fclose($fh_inp);
