@@ -29,7 +29,7 @@ It will process the data of four months ago until the present month.
 Your new csv files will be in the ´archiv´ folder. 
     * YYYYMM.pdf is the source document from BAMF
     * YYYYMM.csv is the csv that ´Tabula´ creates
-    * YYYYMM_extracted.csv is a cleaned version, but no content changed
+    * YYYYMM_extracted.csv is a cleaned version, but no content changed or added.
 
 Then run 
 
